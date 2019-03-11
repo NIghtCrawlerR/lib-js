@@ -9,6 +9,7 @@ var Lib = (function Lib() {
         _this.someMethod = function () {
             return _pivateVars.var1;
         }
+        //general
         _this.getFullDate = function () {
             var d = new Date(),
                 day = d.getDate(),
@@ -22,23 +23,36 @@ var Lib = (function Lib() {
                 m = d.getMinutes();
             return `${h}:${m}`;
         }
+
+        //forms and inputs
         _this.checkEmpty = function (form, el, callback) { //this form, selector, callback
             var empty = 0;
             $(el, form).removeClass('emptyval');
-            $(el, form).each(function(){
-                if($(this).val() == '') {
+            $(el, form).each(function () {
+                if ($(this).val() == '') {
                     $(this).addClass('emptyval');
-                    empty ++;
+                    empty++;
                 }
             })
             callback(empty != 0);
         }
         _this.onlyNums = function (el) {
             var reg = /\d/;
-            el.bind('keydown', function(e){
-                if(reg.test(e.key) || e.keyCode == 8) return;
+            el.bind('keydown', function (e) {
+                if (reg.test(e.key) || e.keyCode == 8) return;
                 else e.preventDefault();
             })
+        }
+        //
+        _this.callFuncByName = function (funcName, args) {
+            if (this.isFunc(window[funcName])) {
+                window[funcName]()
+                return;
+            }
+            console.warn(funcName + ' is not a function');
+        }
+        _this.isFunc = function (func) {
+            return typeof func != undefined && func && {}.toString.call(func) === '[object Function]';
         }
     }
 }())
