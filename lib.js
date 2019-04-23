@@ -34,7 +34,7 @@ var Lib = (function Lib() {
                     empty++;
                 }
             })
-            callback(empty != 0);
+            if(callback) callback(empty != 0);
         }
         _this.onlyNums = function (el) {
             var reg = /\d/;
@@ -43,7 +43,8 @@ var Lib = (function Lib() {
                 else e.preventDefault();
             })
         }
-        //
+
+        //functions
         _this.callFuncByName = function (funcName, args) {
             if (this.isFunc(window[funcName])) {
                 window[funcName]()
@@ -53,6 +54,19 @@ var Lib = (function Lib() {
         }
         _this.isFunc = function (func) {
             return typeof func != undefined && func && {}.toString.call(func) === '[object Function]';
+        }
+
+        //arrays
+        _this.concatArrs = function (arr, ...arrs) {
+            return arr.concat(...arrs);
+        }
+        _this.range = function(a, b) {
+            const arr = new Array();
+            for(let i = a; i <= b; i++) arr.push(i);
+            return arr;
+        }
+        _this.sum = function(arr){
+            return arr.reduce((a, b) => { return a + b })
         }
     }
 }())
