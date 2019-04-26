@@ -34,12 +34,19 @@ var Lib = (function Lib() {
                     empty++;
                 }
             })
-            if(callback) callback(empty != 0);
+            if (callback) callback(empty != 0);
         }
         _this.onlyNums = function (el) {
             var reg = /\d/;
             el.bind('keydown', function (e) {
                 if (reg.test(e.key) || e.keyCode == 8) return;
+                else e.preventDefault();
+            })
+        }
+        _this.onlyAlphaChars = function (el) {
+            var reg = /[a-zA-Zа-яА-Я]/;
+            el.bind('keydown', function(e){
+                if(reg.test(e.key) || e.keyCode == 8) return;
                 else e.preventDefault();
             })
         }
@@ -60,13 +67,23 @@ var Lib = (function Lib() {
         _this.concatArrs = function (arr, ...arrs) {
             return arr.concat(...arrs);
         }
-        _this.range = function(a, b) {
+        _this.range = function (a, b) {
             const arr = new Array();
-            for(let i = a; i <= b; i++) arr.push(i);
+            for (let i = a; i <= b; i++) arr.push(i);
             return arr;
         }
-        _this.sum = function(arr){
+        _this.sum = function (arr) {
             return arr.reduce((a, b) => { return a + b })
+        }
+
+        //nums
+        _this.secToTime = function (sec) {
+            let h = parseInt(sec / 3600),
+                m = parseInt(sec / 60 % 60),
+                s = sec % 60
+
+            const c = (n) => n < 10 ? '0' + n : n
+            return c(h) + ':' + c(m) + ':' + c(s)
         }
     }
 }())
